@@ -1,4 +1,4 @@
-// local reviews data
+// local reviews data const reviews = [
 const reviews = [
    {
       id: 1,

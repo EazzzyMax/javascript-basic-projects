@@ -11,11 +11,11 @@ I just told you! You've killed me! Fry! Quit doing the right thing, you jerk! Mi
   `Rutters Plate Fleet boom chandler Brethren of the Coast handsomely lookout marooned brigantine knave. Buccaneer gangway jack rum loot spyglass line Jack Tar fore gaff. Gaff topmast scuttle ballast swab draught measured fer yer chains dance the hempen jig Chain Shot yardarm.`,
 ];
 
-const form = document.querySelector(".lorem-form");
-const amount = document.getElementById("amount");
-const result = document.querySelector(".lorem-text");
+const form = document.querySelector('.lorem-form');
+const amount = document.getElementById('amount');
+const result = document.querySelector('.lorem-text');
 
-form.addEventListener("submit", function (e) {
+form.addEventListener('submit', function (e) {
   // A click on a form submit button – initiates its submission to the server.
 
   e.preventDefault();
@@ -31,7 +31,7 @@ form.addEventListener("submit", function (e) {
       .map(function (item) {
         return `<p class="result">${item}</p>`;
       })
-      .join("");
+      .join('');
     result.innerHTML = tempText;
   }
 });

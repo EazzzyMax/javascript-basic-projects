@@ -5,15 +5,15 @@
 
 // ********** set date ************
 // select span
-const date = document.getElementById("date");
+const date = document.getElementById('date');
 date.innerHTML = new Date().getFullYear();
 
 // ********** close links ************
-const navToggle = document.querySelector(".nav-toggle");
-const linksContainer = document.querySelector(".links-container");
-const links = document.querySelector(".links");
+const navToggle = document.querySelector('.nav-toggle');
+const linksContainer = document.querySelector('.links-container');
+const links = document.querySelector('.links');
 
-navToggle.addEventListener("click", function () {
+navToggle.addEventListener('click', function () {
   // linksContainer.classList.toggle("show-links");
 
   const linksHeight = links.getBoundingClientRect().height;
@@ -28,42 +28,42 @@ navToggle.addEventListener("click", function () {
 
 // ********** fixed navbar ************
 
-const navbar = document.getElementById("nav");
-const topLink = document.querySelector(".top-link");
+const navbar = document.getElementById('nav');
+const topLink = document.querySelector('.top-link');
 
-window.addEventListener("scroll", function () {
+window.addEventListener('scroll', function () {
   const scrollHeight = window.pageYOffset;
   const navHeight = navbar.getBoundingClientRect().height;
   if (scrollHeight > navHeight) {
-    navbar.classList.add("fixed-nav");
+    navbar.classList.add('fixed-nav');
   } else {
-    navbar.classList.remove("fixed-nav");
+    navbar.classList.remove('fixed-nav');
   }
   // setup back to top link
 
   if (scrollHeight > 500) {
-    console.log("helo");
+    console.log('helo');
 
-    topLink.classList.add("show-link");
+    topLink.classList.add('show-link');
   } else {
-    topLink.classList.remove("show-link");
+    topLink.classList.remove('show-link');
   }
 });
 
 // ********** smooth scroll ************
 // select links
-const scrollLinks = document.querySelectorAll(".scroll-link");
+const scrollLinks = document.querySelectorAll('.scroll-link');
 scrollLinks.forEach((link) => {
-  link.addEventListener("click", (e) => {
+  link.addEventListener('click', (e) => {
     // prevent default
     e.preventDefault();
     // navigate to specific spot
-    const id = e.currentTarget.getAttribute("href").slice(1);
+    const id = e.currentTarget.getAttribute('href').slice(1);
     const element = document.getElementById(id);
 
     const navHeight = navbar.getBoundingClientRect().height;
     const containerHeight = linksContainer.getBoundingClientRect().height;
-    const fixedNav = navbar.classList.contains("fixed-nav");
+    const fixedNav = navbar.classList.contains('fixed-nav');
     let position = element.offsetTop - navHeight;
 
     if (!fixedNav) {

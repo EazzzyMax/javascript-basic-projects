@@ -34,17 +34,17 @@ const futureDate = new Date(tempYear, tempMonth, tempDay + 10, 11, 30, 0);
 
 // let futureDate = new Date(2020, 3, 24, 11, 30, 0);
 
-const year = futureDate.getFullYear();
-const hours = futureDate.getHours();
-const minutes = futureDate.getMinutes();
+const year = date.getFullYear();
+const hours = date.getHours();
+const minutes = date.getMinutes();
 
-let month = futureDate.getMonth();
-month = months[month];
-const weekday = weekdays[futureDate.getDay()];
-const date = futureDate.getDate();
-giveaway.textContent = `giveaway ends on ${weekday}, ${date} ${month} ${year} ${hours}:${minutes}am`;
+let month = date.getMonth();
+tempMonth = months[tempMonth];
+const weekday = weekdays[date.getDay()];
+const date = date.getDate();
+giveaway.textContent = `giveaway ends on ${weekdayName}, ${date} ${tempMonth} ${tempYear} ${hours}:${minutes}am`;
 
-const futureTime = futureDate.getTime();
+const futureTime = date.getTime();
 function getRemaindingTime() {
   const today = new Date().getTime();
 

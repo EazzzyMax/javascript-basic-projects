@@ -11,3 +11,53 @@ I just told you! You've killed me! Fry! Quit doing the right thing, you jerk! Mi
   `Man braid celiac synth freegan readymade, pitchfork fam salvia waistcoat lomo bitters gentrify four loko. Pitchfork semiotics post-ironic vegan. Tofu meditation microdosing hashtag semiotics venmo. Flexitarian vape tilde taiyaki. Prism poutine farm-to-table, messenger bag vegan taxidermy tattooed sartorial squid jean shorts fixie selvage trust fund vape.`,
   `Rutters Plate Fleet boom chandler Brethren of the Coast handsomely lookout marooned brigantine knave. Buccaneer gangway jack rum loot spyglass line Jack Tar fore gaff. Gaff topmast scuttle ballast swab draught measured fer yer chains dance the hempen jig Chain Shot yardarm.`,
 ];
+
+const text0 = ['1', '2', '3', '4', '5', '6', '7', '8','9', '10','11', '12', '13', '14']
+
+const form = document.querySelector('.lorem-form');
+const amount = document.querySelector('#amount');
+const result = document.querySelector('.lorem-text');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const value = parseInt(amount.value);
+  const random = Math.floor(Math.random() * text.length);
+  if (isNaN(value) || value < 2) {
+    result.innerHTML = `<p class='result'> ${text[random]}</p>`;
+  } else {
+    // рандом без(почти) повторок массив
+    let tempText = randomArray(text, value);
+    // форматирование массива
+    tempText = tempText
+      .map((text) => {
+        return `<p class='result'>${text}</p>`;
+      })
+      .join('');
+    // запись в html
+    result.innerHTML = tempText;
+  }
+});
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function randomArray(inArray, value) {
+  let outArray = []; //то что ретёрну
+  let copyInArray = inArray.slice(); //копия массива
+  for (let i = 0; i < value; i++) {
+    let random = Math.floor(Math.random() * copyInArray.length);
+    outArray.push(copyInArray[random]);
+    copyInArray.splice(random, 1);
+    if (copyInArray.length === 0) { //если из копии все удалено
+      copyInArray = inArray.slice(); //то снова скопировать
+    }
+  }
+  console.log(outArray);
+  return outArray;
+}
+

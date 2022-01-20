@@ -204,7 +204,7 @@ nav {
   top: 0;
   left: 0;
   width: 100%;
-  background: var(--clr-white);
+  background: rgba(255, 255, 255, 0.4);
   box-shadow: var(--light-shadow);
 }
 .fixed-nav .links a {
@@ -257,7 +257,7 @@ nav {
 .links a:hover {
   color: var(--clr-grey-1);
 }
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 600px) {
   nav {
     background: transparent;
   }
