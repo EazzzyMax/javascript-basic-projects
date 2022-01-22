@@ -90,8 +90,17 @@ body {
   height: 50px;
   background-color: hsl(0, 0%, 100%);
   color: black;
-  border-radius: 25px;
+  border-radius: 15px;
   user-select: none;
+}
+
+.txt-color {
+  width: max-content;
+  height: max-content;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 20px;
 }
 
 .drag {
@@ -112,16 +121,17 @@ body {
   display: flex;
   flex-direction: row;
   /* column-gap: 8px; */
-  height: 300px;
+  height: 52vh;
   margin-right: -10px;
 }
 
 .item {
-  background-color: #ccc;
+  background-color: #cca;
   width: 100%;
-  height: 300px;
-  border-radius: 25px;
-  transition: 400ms;
+  height: 100%;
+  border-radius: 15px;
+  /* transition: 50ms; */
+  transition: background-color 0ms, width 200ms;
   margin-right: 10px;
 }
 
@@ -136,23 +146,46 @@ body {
   margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
-  width: max-content;
-  column-gap: 25px;
+  width: 110px;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .btn {
-  /* background-image: src('./img/plus.svg'); */
+  background-color: #aaa;
   width: 40px;
   height: 40px;
-  border-radius: 20px;
+  border-radius: 25px;
   border: none;
+  transition: 150ms;
 }
 .btn:hover {
   cursor: pointer;
+  background-color: #ccc;
+}
+.btn:active {
+  background-color: #888;
 }
 
 .btn-img {
+  width: 24px;
+  height: 24px;
+  display: block;
   margin-left: auto;
   margin-right: auto;
   user-select: none;
+  transition: 50ms;
+  
+  fill: #222;
+}
+
+.btn:hover .btn-img{
+  width: 25px;
+  height: 25px;
+}
+
+.btn:active .btn-img {
+  width: 23px;
+  height: 23px;
+  fill: #111;
 }
