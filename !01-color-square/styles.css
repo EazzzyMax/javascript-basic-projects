@@ -77,18 +77,48 @@ select {
   }
 }
 
+/* конец сброса!!!!!!!!!!!!!!!!!!!!!!!! */
+
 body {
+  font-family: 'Montserrat', sans-serif;
   background-color: #222;
   color: white;
   padding: 30px;
 }
 
-.color-square {
-  margin-top: 30px;
+.form {
+  display: flex;
+  width: 100%;
+  justify-content: start;
+  gap: 100px;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.label p {
+  margin-left: 17px;
+}
+
+.input-number {
+  width: 200px;
+  height: 40px;
+  border-radius: 20px;
+  padding-left: 17px;
+  border: none;
+  background-color: #444;
+  color: white;
+}
+
+.square {
+  margin-top: 10px;
   padding: 10px;
   width: 100%;
-  height: 50px;
-  background-color: hsl(0, 0%, 100%);
+  height: 250px;
+  background-color: #444;
   color: black;
   border-radius: 15px;
   user-select: none;
@@ -121,12 +151,12 @@ body {
   display: flex;
   flex-direction: row;
   /* column-gap: 8px; */
-  height: 52vh;
+  height: 40vh;
   margin-right: -10px;
 }
 
 .item {
-  background-color: #cca;
+  background-color: #444;
   width: 100%;
   height: 100%;
   border-radius: 15px;
@@ -158,6 +188,9 @@ body {
   border-radius: 25px;
   border: none;
   transition: 150ms;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .btn:hover {
   cursor: pointer;
@@ -175,13 +208,13 @@ body {
   margin-right: auto;
   user-select: none;
   transition: 50ms;
-  
+
   fill: #222;
 }
 
-.btn:hover .btn-img{
-  width: 25px;
-  height: 25px;
+.btn:hover .btn-img {
+  width: 40px;
+  height: 40px;
 }
 
 .btn:active .btn-img {

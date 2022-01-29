@@ -1,62 +1,83 @@
-const square = document.querySelector('.color-square');
-const dx = square.offsetLeft;
-const dy = square.offsetTop;
-const arrow = document.querySelector('.arrow');
-const arrowSize = arrow.offsetHeight;
+//form
+let step = 180;
+let brightness = 50;
+const stepForm = document.getElementById('step');
+const brightnessForm = document.getElementById('brightness');
+const sectorForm = document.getElementById('colorSector');
+
+stepForm.addEventListener('input', changeStep);
+sectorForm.addEventListener('input', changeColorWheelSector);
+brightnessForm.addEventListener('input', changeBrightness);
+
+//square
+let square = document.querySelector('.color-square');
+let dx = square.offsetLeft;
+let dy = square.offsetTop;
+let arrow = document.querySelector('.arrow-color');
+let arrowSize = arrow.offsetHeight;
 let arrowX;
 let arrowY;
-let counter = 1;
-const maxx = square.offsetWidth - 1;
-const maxy = square.offsetHeight - 1;
+let counter = 2;
+let maxx = square.offsetWidth - 1;
+let maxy = square.offsetHeight - 1;
 let hue;
 let saturation;
-// square.addEventListener('mousemove', changeColor);
 
-let timeout; //вылет за поле костыль
+//без учета ресайза квадрат выходит за диапазон HSL
+window.addEventListener('resize', function () {
+  dx = square.offsetLeft;
+  dy = square.offsetTop;
+  arrowSize = arrow.offsetHeight;
+  maxx = square.offsetWidth - 1;
+  maxy = square.offsetHeight - 1;
+});
+
+//изменение шага
+function changeStep() {
+  console.log('step');
+  step = stepForm.value;
+  if (step > 360 / counter) {
+    step = 360 / counter;
+    stepForm.value = step;
+  }
+  sectorForm.value = counter * step;
+  changeExtraColors();
+}
+//изменение шага через размер сектора цветов
+function changeColorWheelSector() {
+  step = sectorForm.value / counter;
+  stepForm.value = step;
+  changeExtraColors();
+}
+//изменение яркости
+function changeBrightness() {
+  brightness = brightnessForm.value;
+  changeMainColor();
+  changeExtraColors();
+}
 
 //events for dragging
 square.addEventListener('mousedown', function (e) {
   manualDrag(e);
   startDrag();
 });
-square.addEventListener('mouseup', function () {
+window.addEventListener('mouseup', function () {
   stopDrag();
-});
-arrow.addEventListener('mouseup', function () {
-  stopDrag();
-});
-square.addEventListener('mouseout', function () {
-  timeout = setTimeout(stopDrag, 500);
-});
-square.addEventListener('mousemove', function () {
-  clearTimeout(timeout);
 });
 
-//functions
+//functions for dragging
 function startDrag() {
-  square.addEventListener('mousemove', manualDrag);
+  window.addEventListener('mousemove', manualDrag);
   square.classList.add('drag');
 }
 function stopDrag() {
-  square.removeEventListener('mousemove', manualDrag);
-  square.classList.remove('drag');
+  if (square.classList.contains('drag')) {
+    window.removeEventListener('mousemove', manualDrag);
+    square.classList.remove('drag');
+  }
 }
 
 function manualDrag(e) {
-  // let x = e.clientX - dx;
-  // let y = e.clientY - dy;
-  // const maxX = square.offsetWidth - 1;
-  // const maxY = square.offsetHeight - 1;
-  // let x1 = ((x / maxX) * 360) / counter;
-  // let y1 = (y / maxY) * 40 + 30;
-
-  // const arrowSize = arrow.offsetHeight;
-  // arrow.style.left = `${e.clientX - arrowSize / 2}px`;
-  // arrow.style.top = `${e.clientY - arrowSize / 2}px`;
-  // document.querySelector('.txt-color').textContent = `${Math.floor(x1)}° ${Math.floor(y1)}%`;
-  // square.style.backgroundColor = `hsl(${x1},${y1}%,50%)`;
-
-  //new
   moveArrow(e);
   changeMainColor();
   changeExtraColors();
@@ -64,19 +85,32 @@ function manualDrag(e) {
 
 function moveArrow(e) {
   arrowX = e.clientX;
+  if (arrowX < dx) {
+    arrowX = dx;
+  }
+  else if (arrowX > dx + maxx) {
+    arrowX = dx + maxx;
+  }
+
   arrowY = e.clientY;
+  if (arrowY < dy) {
+    arrowY = dy;
+  }
+  else if (arrowY > dy + maxy) {
+    arrowY = dy + maxy;
+  }
+
+  console.log(`dx ${dx}, dy ${dy}, maxx ${maxx}, maxy ${maxy}`);
+  console.log(`arrowX${arrowX}, arrowY ${arrowY}`);
+
   arrow.style.left = `${arrowX - arrowSize / 2}px`;
   arrow.style.top = `${arrowY - arrowSize / 2}px`;
 }
 
-function replaceArrow(increase) {
-  
-}
-
 function changeMainColor() {
-  hue = (((arrowX - dx) / maxx) * 360) / counter;
-  saturation = ((arrowY - dy) / maxy) * 30 + 50;
-  square.style.backgroundColor = `hsl(${hue},${saturation}%,50%)`;
+  hue = ((arrowX - dx) / maxx) * 360;
+  saturation = ((arrowY - dy) / maxy) * 50 + 30;
+  square.style.backgroundColor = `hsl(${hue},${saturation}%,${brightness}%)`;
   document.querySelector('.txt-color').textContent = `hsl(${Math.floor(hue)},${Math.floor(saturation)}%,50%)`;
 }
 
@@ -84,10 +118,8 @@ function changeExtraColors() {
   const items = document.querySelectorAll('.item');
   items.forEach(function (child) {
     if (!child.classList.contains('hide')) {
-      console.log(child);
-      const hueStep = 360 / counter;
-      let extraHue = (child.id - 1) * hueStep + hue;
-      child.style.backgroundColor = `hsl(${extraHue},${saturation}%,50%`;
+      let extraHue = (child.id - 1) * step + hue;
+      child.style.backgroundColor = `hsl(${extraHue},${saturation}%,${brightness}%`;
     }
   });
 }
@@ -105,6 +137,8 @@ function decrease() {
     counter--;
     console.log(counter);
   }
+  changeExtraColors();
+  changeColorWheelSector();
 }
 
 function increase() {
@@ -113,9 +147,11 @@ function increase() {
     counter++;
     console.log(counter);
   }
+  changeExtraColors();
+  changeColorWheelSector();
 }
 
-// контейнер и дети
+// container and items
 const container = document.querySelector('.rec-container');
 
 function deleteItem() {
