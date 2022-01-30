@@ -9,6 +9,8 @@ stepForm.addEventListener('input', changeStep);
 sectorForm.addEventListener('input', changeColorWheelSector);
 brightnessForm.addEventListener('input', changeBrightness);
 
+
+
 //square
 let square = document.querySelector('.color-square');
 let dx = square.offsetLeft;
@@ -109,7 +111,7 @@ function moveArrow(e) {
 
 function changeMainColor() {
   hue = ((arrowX - dx) / maxx) * 360;
-  saturation = ((arrowY - dy) / maxy) * 50 + 30;
+  saturation = ((arrowY - dy) / maxy) * 50 + 50;
   square.style.backgroundColor = `hsl(${hue},${saturation}%,${brightness}%)`;
   document.querySelector('.txt-color').textContent = `hsl(${Math.floor(hue)},${Math.floor(saturation)}%,50%)`;
 }
@@ -125,8 +127,8 @@ function changeExtraColors() {
 }
 
 //счетчик
-const minusBtn = document.querySelector('.decrease');
-const plusBtn = document.querySelector('.increase');
+const minusBtn = document.querySelector('.decreaseCount');
+const plusBtn = document.querySelector('.increaseCount');
 
 minusBtn.addEventListener('click', decrease);
 plusBtn.addEventListener('click', increase);

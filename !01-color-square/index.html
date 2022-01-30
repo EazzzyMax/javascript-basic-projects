@@ -1,75 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-    </style>
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="styles.css" />
+      <style>
+         @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+      </style>
 
-    <title>Document</title>
-  </head>
-  <body>
-    <h1>Colorito</h1>
+      <title>Document</title>
+   </head>
+   <body>
+      <h1>Colorito</h1>
 
-    <p class="txt-color">Color name</p>
-    <form class="form" maction="">
-      <label class="label">
-        <p>Разница цветов</p>
-        <input class="input-number" value="180" type="number" step="10" max="100" min="0" id="step" placeholder="30"
-      /></label>
-      <label class="label">
-        <p>Диапазон цветов</p>
-        <input
-          class="input-number"
-          value="360"
-          type="number"
-          step="20"
-          max="360"
-          min="0"
-          id="colorSector"
-          placeholder="30"
-      /></label>
-      <label class="label">
-        <p>Яркость</p>
-        <input
-          class="input-number"
-          value="50"
-          type="number"
-          max="100"
-          min="0"
-          step="10"
-          id="brightness"
-          placeholder="50"
-      /></label>
-    </form>
+      <form class="form" maction="">
+         <label class="label">
+            <p>Разница цветов</p>
+            <div class="input-container">
+               <input class="input-number" value="180" type="number" step="10" max="180" min="0" id="step" />
+               <div class="form__btn-container">
+                  <button class="form__btn increase" id="increase-step">+</button>
+                  <button class="form__btn decrease" id="decrease-step">-</button>
+               </div>
+            </div>
+         </label>
+         <label class="label">
+            <p>Диапазон цветов</p>
+            <div class="input-container">
+               <input class="input-number" value="360" type="number" step="20" max="360" min="0" id="colorSector" />
+               <div class="form__btn-container">
+                  <button class="form__btn increase" id="increase-sector">+</button>
+                  <button class="form__btn decrease" id="decrease-sector">-</button>
+               </div>
+            </div>
+         </label>
+         <label class="label">
+            <p>Яркость</p>
+            <div class="input-container">
+               <input class="input-number" value="50" type="number" max="100" min="0" step="10" id="brightness" />
+               <div class="form__btn-container">
+                  <button class="form__btn increase" id="increase-brightness">+</button>
+                  <button class="form__btn decrease" id="decrease-brightness">-</button>
+               </div>
+            </div>
+         </label>
+      </form>
 
-    <div class="square color-square">
-      <div class="arrow arrow-color" width="14" height="14">
-        <img src="./img/strelka.svg" alt="" />
+      <div class="square color-square">
+         <p class="txt-color">Color name</p>
+         <div class="arrow arrow-color" width="14" height="14">
+            <img src="./img/strelka.svg" alt="" />
+         </div>
       </div>
-    </div>
 
-    <div class="rec-container">
-      <div class="item" id="1"></div>
-      <div class="item" id="2"></div>
-      <div class="item hide" id="3"></div>
-    </div>
-    <div class="btn-container">
-      <button class="btn decrease">
-        <svg class="btn-img" viewBox="0 0 24 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect y="4" width="4" height="24" rx="2" transform="rotate(-90 0 4)" />
-        </svg>
-      </button>
-      <button class="btn increase">
-        <svg class="btn-img" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="10" width="4" height="24" rx="2" />
-          <rect y="14" width="4" height="24" rx="2" transform="rotate(-90 0 14)" />
-        </svg>
-      </button>
-    </div>
-  </body>
-  <script src="app.js"></script>
+      <div class="rec-container">
+         <div class="item" id="1"></div>
+         <div class="item" id="2"></div>
+         <div class="item hide" id="3"></div>
+      </div>
+      <div class="btn-container">
+         <button class="btn decreaseCount">
+            <svg class="btn-img" viewBox="0 0 24 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <rect y="4" width="4" height="24" rx="2" transform="rotate(-90 0 4)" />
+            </svg>
+         </button>
+         <button class="btn increaseCount">
+            <svg class="btn-img" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <rect x="10" width="4" height="24" rx="2" />
+               <rect y="14" width="4" height="24" rx="2" transform="rotate(-90 0 14)" />
+            </svg>
+         </button>
+      </div>
+   </body>
+   <script src="app.js"></script>
 </html>

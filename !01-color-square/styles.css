@@ -90,6 +90,7 @@ body {
   display: flex;
   width: 100%;
   justify-content: start;
+  align-content: center;
   gap: 100px;
 }
 
@@ -103,21 +104,51 @@ body {
   margin-left: 17px;
 }
 
-.input-number {
-  width: 200px;
+.input-container {
+  display: flex;
+  gap: 2px;
+}
+
+.form__btn-container {
+  display: flex;
+  flex-direction: column;
   height: 40px;
-  border-radius: 20px;
-  padding-left: 17px;
+  gap: 2px;
+}
+
+.form__btn {
+  height: 19px;
   border: none;
   background-color: #444;
   color: white;
 }
 
+.increase {
+  border-radius: 3px 10px 3px 3px;
+}
+.decrease {
+  border-radius: 3px 3px 10px 3px;
+}
+
+.input-number {
+  width: 200px;
+  height: 40px;
+  border-radius: 15px 3px 3px 15px;
+  padding-left: 17px;
+  border: none;
+  background-color: #444;
+  color: white;
+}
+input[type=number]::-webkit-inner-spin-button {
+-webkit-appearance: none;
+}
+
+
 .square {
   margin-top: 10px;
   padding: 10px;
   width: 100%;
-  height: 250px;
+  height: 25vh;
   background-color: #444;
   color: black;
   border-radius: 15px;
@@ -127,7 +158,8 @@ body {
 .txt-color {
   width: max-content;
   height: max-content;
-  display: block;
+  /* display: block; */
+  align-self: center;
   margin-left: auto;
   margin-right: auto;
   font-size: 20px;
@@ -147,7 +179,7 @@ body {
 }
 
 .rec-container {
-  margin-top: 20px;
+  margin-top: 10px;
   display: flex;
   flex-direction: row;
   /* column-gap: 8px; */
@@ -213,8 +245,8 @@ body {
 }
 
 .btn:hover .btn-img {
-  width: 40px;
-  height: 40px;
+  width: 26px;
+  height: 26px;
 }
 
 .btn:active .btn-img {
