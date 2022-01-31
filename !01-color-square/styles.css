@@ -155,9 +155,9 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 .square {
-  /* background: url(./img/xgrad1.jpg), #808080; */
+  background: url(./img/xgrad1.jpg);
 
-  background-blend-mode: multiply;
+  /* background-blend-mode: multiply; */
   background-size: 100% 100%;
   background-repeat: no-repeat;
 
