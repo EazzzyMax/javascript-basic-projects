@@ -1,3 +1,5 @@
+let hue;
+let saturation;
 //form
 let step = 180;
 let brightness = 50;
@@ -9,54 +11,52 @@ stepForm.addEventListener('input', changeStep);
 sectorForm.addEventListener('input', changeColorWheelSector);
 brightnessForm.addEventListener('input', changeBrightness);
 
-
-
-//square
-let square = document.querySelector('.color-square');
-let dx = square.offsetLeft;
-let dy = square.offsetTop;
-let arrow = document.querySelector('.arrow-color');
-let arrowSize = arrow.offsetHeight;
-let arrowX;
-let arrowY;
-let counter = 2;
-let maxx = square.offsetWidth - 1;
-let maxy = square.offsetHeight - 1;
-let hue;
-let saturation;
-
-//без учета ресайза квадрат выходит за диапазон HSL
-window.addEventListener('resize', function () {
-  dx = square.offsetLeft;
-  dy = square.offsetTop;
-  arrowSize = arrow.offsetHeight;
-  maxx = square.offsetWidth - 1;
-  maxy = square.offsetHeight - 1;
-});
-
-//изменение шага
+//change step / brightness
 function changeStep() {
-  console.log('step');
-  step = stepForm.value;
-  if (step > 360 / counter) {
+  if (stepForm.value > 360 / counter) {
     step = 360 / counter;
     stepForm.value = step;
   }
+  step = stepForm.value;
   sectorForm.value = counter * step;
   changeExtraColors();
 }
-//изменение шага через размер сектора цветов
+
 function changeColorWheelSector() {
   step = sectorForm.value / counter;
   stepForm.value = step;
   changeExtraColors();
 }
-//изменение яркости
+
 function changeBrightness() {
   brightness = brightnessForm.value;
   changeMainColor();
   changeExtraColors();
 }
+
+//square
+let square = document.querySelector('.square');
+let squareLeft = square.offsetLeft;
+let squareTop = square.offsetTop;
+let squareWidth = square.offsetWidth - 1;
+let squareHight = square.offsetHeight - 1;
+
+//arrow
+let pointer = document.querySelector('.pointer-container');
+let pointerSize = pointer.offsetHeight;
+let pointerX;
+let pointerY;
+
+let counter = 2;
+
+//if page resized
+window.addEventListener('resize', function () {
+  squareLeft = square.offsetLeft;
+  squareTop = square.offsetTop;
+  pointerSize = pointer.offsetHeight;
+  squareWidth = square.offsetWidth - 1;
+  squareHight = square.offsetHeight - 1;
+});
 
 //events for dragging
 square.addEventListener('mousedown', function (e) {
@@ -70,12 +70,12 @@ window.addEventListener('mouseup', function () {
 //functions for dragging
 function startDrag() {
   window.addEventListener('mousemove', manualDrag);
-  square.classList.add('drag');
+  document.querySelector('body').classList.add('drag');
 }
 function stopDrag() {
-  if (square.classList.contains('drag')) {
+  if (document.querySelector('body').classList.contains('drag')) {
     window.removeEventListener('mousemove', manualDrag);
-    square.classList.remove('drag');
+    document.querySelector('body').classList.remove('drag');
   }
 }
 
@@ -86,34 +86,30 @@ function manualDrag(e) {
 }
 
 function moveArrow(e) {
-  arrowX = e.clientX;
-  if (arrowX < dx) {
-    arrowX = dx;
-  }
-  else if (arrowX > dx + maxx) {
-    arrowX = dx + maxx;
-  }
-
-  arrowY = e.clientY;
-  if (arrowY < dy) {
-    arrowY = dy;
-  }
-  else if (arrowY > dy + maxy) {
-    arrowY = dy + maxy;
+  pointerX = e.clientX;
+  if (pointerX < squareLeft) {
+    pointerX = squareLeft;
+  } else if (pointerX > squareLeft + squareWidth) {
+    pointerX = squareLeft + squareWidth;
   }
 
-  console.log(`dx ${dx}, dy ${dy}, maxx ${maxx}, maxy ${maxy}`);
-  console.log(`arrowX${arrowX}, arrowY ${arrowY}`);
+  pointerY = e.clientY;
+  if (pointerY < squareTop) {
+    pointerY = squareTop;
+  } else if (pointerY > squareTop + squareHight) {
+    pointerY = squareTop + squareHight;
+  }
 
-  arrow.style.left = `${arrowX - arrowSize / 2}px`;
-  arrow.style.top = `${arrowY - arrowSize / 2}px`;
+  pointer.style.left = `${pointerX - pointerSize / 2}px`;
+  pointer.style.top = `${pointerY - pointerSize / 2}px`;
 }
 
 function changeMainColor() {
-  hue = ((arrowX - dx) / maxx) * 360;
-  saturation = ((arrowY - dy) / maxy) * 50 + 50;
-  square.style.backgroundColor = `hsl(${hue},${saturation}%,${brightness}%)`;
+  hue = ((pointerX - squareLeft) / squareWidth) * 360;
+  saturation = ((pointerY - squareTop) / squareHight) * 50 + 50;
+  // square.style.backgroundColor = `hsl(${hue},${saturation}%,${brightness}%)`;
   document.querySelector('.txt-color').textContent = `hsl(${Math.floor(hue)},${Math.floor(saturation)}%,50%)`;
+  document.querySelector('.pointer').style.backgroundColor = `hsl(${hue},${saturation}%,${brightness}%)`;
 }
 
 function changeExtraColors() {

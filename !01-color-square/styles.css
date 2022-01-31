@@ -78,12 +78,23 @@ select {
 }
 
 /* конец сброса!!!!!!!!!!!!!!!!!!!!!!!! */
+header {
+  padding: 0 0 0 30px;
+  width: 100%;
+  height: 60px;
+  background-color: #333;
+  display: flex;
+  align-items: center;
+}
 
 body {
   font-family: 'Montserrat', sans-serif;
-  background-color: #222;
   color: white;
-  padding: 30px;
+}
+
+main {
+  background-color: #222;
+  padding: 15px 30px 30px 30px;
 }
 
 .form {
@@ -124,29 +135,34 @@ body {
 }
 
 .increase {
-  border-radius: 3px 10px 3px 3px;
+  border-radius: 3px 15px 3px 3px;
 }
 .decrease {
-  border-radius: 3px 3px 10px 3px;
+  border-radius: 3px 3px 15px 3px;
 }
 
 .input-number {
   width: 200px;
   height: 40px;
-  border-radius: 15px 3px 3px 15px;
+  border-radius: 15px 5px 3px 15px;
   padding-left: 17px;
   border: none;
   background-color: #444;
   color: white;
 }
-input[type=number]::-webkit-inner-spin-button {
--webkit-appearance: none;
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
-
 .square {
+  /* background: url(./img/xgrad1.jpg), #808080; */
+
+  background-blend-mode: multiply;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+
+  cursor: url(./img/cursor-default.png) 15 15, default;
   margin-top: 10px;
-  padding: 10px;
   width: 100%;
   height: 25vh;
   background-color: #444;
@@ -154,28 +170,50 @@ input[type=number]::-webkit-inner-spin-button {
   border-radius: 15px;
   user-select: none;
 }
+.drag .square {
+  cursor: none;
+}
 
 .txt-color {
+  user-select: none;
+  pointer-events: none;
+  isolation: isolate;
+  font-family: 'DM Mono', monospace;
+  position: relative;
   width: max-content;
   height: max-content;
-  /* display: block; */
   align-self: center;
   margin-left: auto;
   margin-right: auto;
   font-size: 20px;
+  z-index: 100;
 }
 
 .drag {
-  cursor: none;
+  cursor: none !important;
 }
 
-.arrow {
+.pointer-container {
+  z-index: 1;
   position: absolute;
-  /* top: 0; */
-  /* left: 0; */
-
   user-select: none;
   pointer-events: none;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pointer {
+  border: 2px solid #222;
+  border-radius: 100px;
+  height: 30px;
+  width: 30px;
+  transition: width 100ms, height 100ms;
+}
+.drag .pointer {
+  height: 60px;
+  width: 60px;
 }
 
 .rec-container {
@@ -192,7 +230,6 @@ input[type=number]::-webkit-inner-spin-button {
   width: 100%;
   height: 100%;
   border-radius: 15px;
-  /* transition: 50ms; */
   transition: background-color 0ms, width 200ms;
   margin-right: 10px;
 }
@@ -200,7 +237,6 @@ input[type=number]::-webkit-inner-spin-button {
 .hide {
   width: 0;
   margin: 0;
-  /* display: none; */
 }
 
 .btn-container {
@@ -213,7 +249,7 @@ input[type=number]::-webkit-inner-spin-button {
   justify-content: space-between;
 }
 
-.btn {
+.btn-count {
   background-color: #aaa;
   width: 40px;
   height: 40px;
@@ -224,11 +260,11 @@ input[type=number]::-webkit-inner-spin-button {
   justify-content: center;
   align-items: center;
 }
-.btn:hover {
+.btn-count:hover {
   cursor: pointer;
   background-color: #ccc;
 }
-.btn:active {
+.btn-count:active {
   background-color: #888;
 }
 
@@ -244,13 +280,27 @@ input[type=number]::-webkit-inner-spin-button {
   fill: #222;
 }
 
-.btn:hover .btn-img {
+.btn-count:hover .btn-img {
   width: 26px;
   height: 26px;
 }
 
-.btn:active .btn-img {
-  width: 23px;
-  height: 23px;
+.btn-count:active .btn-img {
+  width: 24px;
+  height: 24px;
   fill: #111;
+}
+.test {
+  cursor: default;
+  width: 100px;
+  height: 100px;
+  background: red;
+}
+
+.test:hover {
+  cursor: pointer;
+  -moz-transition: cursor 500ms ease-in-out;
+  -o-transition: cursor 500ms ease-in-out;
+  -webkit-transition: cursor 500ms ease-in-out;
+  transition: cursor 500ms ease-in-out;
 }
