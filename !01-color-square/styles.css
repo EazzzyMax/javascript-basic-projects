@@ -82,12 +82,13 @@ header {
   padding: 0 0 0 30px;
   width: 100%;
   height: 60px;
-  background-color: #333;
+  background-color: #444;
   display: flex;
   align-items: center;
 }
 
 body {
+  background-color: #282828;
   font-family: 'Montserrat', sans-serif;
   color: white;
 }
@@ -174,18 +175,22 @@ input[type='number']::-webkit-inner-spin-button {
   cursor: none;
 }
 
+
+
 .txt-color {
   user-select: none;
   pointer-events: none;
-  isolation: isolate;
   font-family: 'DM Mono', monospace;
-  position: relative;
   width: max-content;
   height: max-content;
+  top: 10px;
   align-self: center;
   margin-left: auto;
   margin-right: auto;
   font-size: 20px;
+
+  /* курсор не перекрывает значение */
+  position: relative;
   z-index: 100;
 }
 
