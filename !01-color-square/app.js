@@ -6,6 +6,7 @@ let brightness = 100;
 const stepForm = document.getElementById('step');
 const brightnessForm = document.getElementById('brightness');
 const sectorForm = document.getElementById('colorSector');
+const brightnessControl = document.querySelector('.brightness-control')
 
 stepForm.addEventListener('input', changeStep);
 sectorForm.addEventListener('input', changeColorWheelSector);
@@ -13,10 +14,10 @@ brightnessForm.addEventListener('input', changeBrightness);
 
 const btnsChangeValue = document.querySelectorAll('.form__btn');
 btnsChangeValue.forEach(function (item) {
-  item.addEventListener('click', changeAnyValue);
+  item.addEventListener('click', changeValueOnClick);
 });
 
-function changeAnyValue(e) {
+function changeValueOnClick(e) {
   e.preventDefault();
 
   input = e.currentTarget.parentElement.parentElement.children[0];
@@ -60,6 +61,7 @@ function changeBrightness() {
   brightness = brightnessForm.value;
   changeMainColor();
   changeExtraColors();
+  brightnessControl.style.opacity = (100-brightness) / 100;
 }
 
 //square
@@ -86,7 +88,7 @@ window.addEventListener('resize', function () {
   squareHight = square.offsetHeight - 1;
 });
 
-//events. start stop dragging
+//events. start stop dragging!!!!!!!!!!!!!!!!!!!!!!!!!!
 square.addEventListener('mousedown', function (e) {
   draging(e);
   startDrag();
@@ -131,29 +133,44 @@ function moveArrow(e) {
   pointer.style.top = `${pointerY - pointerSize / 2}px`;
 }
 
-function changeMainColor() {
-  hue = ((pointerX - squareLeft) / squareWidth) * 360;
-  saturation = ((pointerY - squareTop) / squareHight) * 100;
-  // square.style.backgroundColor = `hsl(${hue},${saturation}%,${brightness}%)`;
+let hueRange = 180;
+function changeRangeSize() {
+  hueRange = 360 / counter;
+  square.style['background-size'] = `${counter * 100}% 100%`;
+}
 
-  
+function changeMainColor() {
+  hue = ((pointerX - squareLeft) / squareWidth) * hueRange;
+  saturation = ((pointerY - squareTop) / squareHight) * 50 + 50;
+
   let rgb = RGBfromHSV(hue, saturation, brightness);
-  console.log(rgb);
-  document.querySelector('.txt-color').textContent = `hsl(${Math.floor(hue)},${Math.floor(saturation)}%,50%)`;
-  document.querySelector('.pointer').style.backgroundColor = `${rgb[0]},${rgb[1]},${rgb[2]}`;
+  document.querySelector('.txt-color').textContent = `hsb(${Math.floor(hue)},${Math.floor(saturation)}%,${Math.floor(
+    brightness
+  )}%)`;
+  document.querySelector('.pointer').style.backgroundColor = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+  // document.querySelector('.pointer').style.backgroundColor = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+  // document.querySelector('.pointer').style.backgroundColor = `hsl(${hue},${saturation}%,${brightness}%`;
 }
 
 function changeExtraColors() {
-  const items = document.querySelectorAll('.item');
-  items.forEach(function (child) {
-    if (!child.classList.contains('hide')) {
-      let extraHue = (child.id - 1) * hueDifference + hue;
-      child.style.backgroundColor = `hsl(${extraHue},${saturation}%,${brightness}%`;
+  const allItems = document.querySelectorAll('.items');
+  allItems.forEach(function (items) {
+    if (!items.classList.contains('hide')) {
+      let itemList = items.querySelectorAll('.item');
+      let extraMiddleHue = (items.id - 1) * hueDifference + hue;
+      let extraHue = extraMiddleHue -  10 * (itemList.length - 1);
+      
+      itemList.forEach(function (item) {
+        let rgb = RGBfromHSV(extraHue, saturation, brightness);
+        item.style.backgroundColor = `rgb(${rgb[0]},${rgb[1]},${rgb[2]}`;
+        extraHue += 20;
+      })
+      // child.style.backgroundColor = `hsl(${extraHue},${saturation}%,${brightness}%`;
     }
   });
 }
 
-//counf of item
+//counf of itemS
 const minusBtn = document.querySelector('.decreaseCount');
 const plusBtn = document.querySelector('.increaseCount');
 
@@ -164,51 +181,57 @@ function decreaceCountOfItems() {
   if (counter > 1) {
     deleteItem();
     counter--;
-    console.log(counter);
   }
   changeExtraColors();
   changeColorWheelSector();
+  changeRangeSize();
 }
 
 function increaseCountOfItems() {
   if (counter < 6) {
     createItem();
     counter++;
-    console.log(counter);
   }
   changeExtraColors();
   changeColorWheelSector();
+  changeRangeSize();
 }
 
 // container and items
-const container = document.querySelector('.rec-container');
+const mainContainer = document.querySelector('.rec-container');
 
 function deleteItem() {
   item = document.getElementById(`${counter + 1}`);
-  container.removeChild(item);
+  mainContainer.removeChild(item);
   document.getElementById(counter).classList.add('hide');
 }
 
 function createItem() {
   const item = document.createElement('div');
-  item.classList.add('item');
+  item.classList.add('items');
   item.classList.add('hide');
   item.id = counter + 2;
-  container.appendChild(item);
+  item.innerHTML = `
+          <div class="item"></div>
+  `;
+  mainContainer.appendChild(item);
 
   document.getElementById(counter + 1).classList.remove('hide');
 }
 
-
-
 //работа с HSV(HSB) более понятен человеческому глазу
-function RGBfromHSV(H, S, V) {
-  const  Hi = parseInt(H / 60);
-  const  Vmin = ((100 - S) * V) / 100;
+function RGBfromHSV(Hin, S, V) {
+  let H = Hin % 360;
+  const Hi = parseInt(H / 60);
+  const Vmin = ((100 - S) * V) / 100;
   const a = (V - Vmin) * ((H % 60) / 60);
 
   const Vinc = Vmin + a;
   const Vdec = V - a;
+
+  let r;
+  let g;
+  let b;
 
   switch (Hi) {
     case 0:
@@ -243,21 +266,10 @@ function RGBfromHSV(H, S, V) {
     default:
       break;
   }
-  r *= 255 / 100;
-  g *= 255 / 100;
-  b*= 255 / 100;
 
-  r = Math.round(r);
-  g = Math.round(g);
-  b = Math.round(b);
+  r = Math.round((r * 255) / 100);
+  g = Math.round((g * 255) / 100);
+  b = Math.round((b * 255) / 100);
 
-  // console.log(`${r} ${g} ${b}`);
-  return [r,g,b];
+  return [r, g, b];
 }
-
-let a = RGBfromHSV(100, 80, 40)
-
-console.log(a);
-
-
-
